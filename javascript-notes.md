@@ -1,7 +1,7 @@
-# 📚 JavaScript Notes - Based on "JavaScript: From First Steps to Professional" by Anjana Vakil (FrontendMasters)
+# 📚 JavaScript Notes 
+## Based on "JavaScript: From First Steps to Professional" by Anjana Vakil (FrontendMasters)
 
 ## 🌟 Section 8: Quiz Project  
----  
 ### Different Ways to Define Object Properties:  
 
 #### 1️⃣ Using Quoted Property Names (for properties with spaces)  
@@ -24,8 +24,9 @@ let myAnotherObject = {
 ✅ You can use: `myAnotherObject.myProperty`  
 ✅ You can also use: `myAnotherObject["myProperty"]`  
 
+---
+
 ## 🌟 Section 9: Functions  
----  
 - **Values** are things.  
 - **Variables** point to things.  
 - **Functions** do things.  
