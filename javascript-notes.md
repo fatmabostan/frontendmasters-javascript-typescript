@@ -1,7 +1,11 @@
+<div align="center">
+
 # 📚 JavaScript Notes 
 ## Based on "JavaScript: From First Steps to Professional" by Anjana Vakil (FrontendMasters)
 
-## 🌟 Section 8: Quiz Project  
+</div>
+
+## 🌟 Section 8: Quiz Project
 ### Different Ways to Define Object Properties:  
 
 #### 1️⃣ Using Quoted Property Names (for properties with spaces)  
@@ -26,7 +30,7 @@ let myAnotherObject = {
 
 ---
 
-## 🌟 Section 9: Functions  
+## 🌟 Section 9: Functions 
 - **Values** are things.  
 - **Variables** point to things.  
 - **Functions** do things.  
@@ -68,3 +72,40 @@ function doesThisWork(1WeirdVariable!) {} // ❌ Identifier starts with a number
 const add = (x, y) => x + y;
 ```
 
+### ***Scope of Variables***  
+- Scope determines where variables are "in play"
+- Scopes are ***nested*** within the program
+- The widest scope is ***global scope***
+
+&nbsp;
+
+---
+<div align="center">
+<img src="https://i.imgur.com/oBD70G0.png" width="340">
+<img src="https://i.imgur.com/oioB8GM.png" width="300">
+</div>
+
+---
+&nbsp;
+
+```javascript
+global scope
+
+function lookScope(){
+    function scope
+}
+
+if / loop{
+    block scope
+}
+```
+- from global scope, we can't see in
+- inner scope can see out
+
+&nbsp;
+
+| **Aspect**                    | **var**                                  | **let**                                  | **const**                                |
+|-------------------------------|------------------------------------------|------------------------------------------|------------------------------------------|
+| **1. Scope Differences**       | Function Scope only (does not work with block scope) | Block Scope (accessible only within the block) | Block Scope (accessible only within the block) |
+| **2. Mutability Differences**  | Can be reassigned                        | Can be reassigned                        | Cannot be reassigned (immutable)         |
+| **3. Hoisting Differences**    | Hoisted and initialized with `undefined` | Hoisted but cannot be accessed before initialization (TDZ) | Hoisted but cannot be accessed before initialization (TDZ) |
