@@ -81,7 +81,7 @@ const add = (x, y) => x + y;
 
 ---
 <div align="center">
-<img src="https://i.imgur.com/oBD70G0.png" width="340">
+<img src="https://i.imgur.com/oBD70G0.png" width="340">&nbsp;
 <img src="https://i.imgur.com/oioB8GM.png" width="300">
 </div>
 
@@ -109,3 +109,19 @@ if / loop{
 | **1. Scope Differences**       | Function Scope only (does not work with block scope) | Block Scope (accessible only within the block) | Block Scope (accessible only within the block) |
 | **2. Mutability Differences**  | Can be reassigned                        | Can be reassigned                        | Cannot be reassigned (immutable)         |
 | **3. Hoisting Differences**    | Hoisted and initialized with `undefined` | Hoisted but cannot be accessed before initialization (TDZ) | Hoisted but cannot be accessed before initialization (TDZ) |
+
+---
+
+## 🌟 Section 10: Event Listeners
+
+- `.addEventListener()` listen for events on a DOM element
+
+```javascript
+document.addEventListener("event", callbackFunction/handlerFunction));
+```
+- JS passes an `event` object to the handler function with information about the event. If you accept this as a parameter, you can use it to get details.
+```javascript
+document.addEventListener("click", (event) => {
+    console.log(event.target);
+})
+```
