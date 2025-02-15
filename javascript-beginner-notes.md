@@ -23,7 +23,6 @@
 <div align="center">
 <img src="https://i.imgur.com/JFi6KnN.png" alt="DOM Tree" width="300">
 </div>
-&nbsp;
 
 - `document`: Represents the entire HTML document
 - `document.title`: Page title
@@ -44,7 +43,6 @@
 
 - `typeof value`: Returns the type of a value
 - `typeof Infinity`: Returns `"number"` (Yes, JS has a special value named `Infinity`)  
-  &nbsp;
 
 | Feature          | **Primitive Values**                                                   | **Objects**                                         |
 | ---------------- | ---------------------------------------------------------------------- | --------------------------------------------------- |
@@ -66,7 +64,6 @@
 | **Example**    | `let x = null;`                                              | `let y;` (automatically `undefined`)                 |
 | **Usage Case** | Used when a variable is explicitly set to "no value"         | Happens when JS doesn't assign a value automatically |
 
-&nbsp;
 
 - `.indexOf("H")` or `.indexOf("HA")` Returns the index of the first match; if not found, returns `-1`
 - `.includes(" ")` Returns boolean based on whether the string contains the given value
@@ -140,7 +137,6 @@ Arrays are mutable so their elements can be changed, but their reference (memory
 <div align="center">
 <img src="https://i.imgur.com/5jva0tg.png" width="300">
 </div>
-&nbsp;
 
 - `.sort()` Sorts elements as STRINGS by default
 - `.sort()` modifies the original array
