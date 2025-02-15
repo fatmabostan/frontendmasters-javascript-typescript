@@ -138,3 +138,58 @@ recursive();
  +-----------------+
 
 ```
+---
+## 🌟 Section 3:  Functions & Callbacks 
+
+### How Loops Work in JavaScript?
+- JavaScript engines process loops inside the Execution Context, but `loops themselves do not get pushed to the Call Stack`.
+- Loops run within a `single Execution Context`, and each iteration performs specific operations.
+- If a `function is called inside a loop, that function gets pushed onto the Call Stack` and removed once executed.
+- When the loop finishes, the Execution Context is cleared, and memory is freed.
+- In `infinite loop, the Call Stack does not overflow but the CPU usage reaches 100%`, freezing the browser.
+
+#### Loops with Asynchronous Code (setTimeout and Loops)
+```js
+for (var i = 0; i < 3; i++) {
+    setTimeout(() => console.log(i), 1000);
+}
+// what we expect: 0 1 2
+// what happened: 3 3 3
+```
+**Why does this happen? Let’s analyze it.**
+- Each iteration immediately schedules a setTimeout() function in the Web API, but does not execute it right away.
+- Since setTimeout is asynchronous, `it does not block the loop`; the loop completes before any setTimeout callback runs.
+- By the time the setTimeout callbacks actually execute, the loop has already finished, and i is now 3.
+- After 1000ms, the scheduled setTimeout callbacks are moved from the Web API to the callback queue.
+- Since `var` does not have block scope, `all three callbacks reference the same i variable`, which is now 3.
+
+```js
+//Fixing the Issue: Using let
+for (let i = 0; i < 3; i++) {
+    setTimeout(() => console.log(i), 1000);
+}
+//Now the output is: 0 1 2
+```
+**Why does let work?**
+- `let has block scope`, so a `new i is created for each iteration`.
+- `Each iteration of the loop has its own separate i`, so when setTimeout executes, it references the correct value.
+
+#### In JavaScript, functions are first-class objects. This means:
+- **Functions behave like objects**
+- You can assign functions to variables.
+- You can pass functions as arguments to other functions.
+- You can return functions from other functions.
+- Functions can have properties and methods just like objects.
+
+- `Higher Order Function` (HOF) is a function that either `takes another function as an argument` (known as a callback function) or `returns a function` as its result.
+- `Callback Function` is a function that is passed as an argument to another function and is executed later.
+- Callbacks and Higher Order Functions simplify our code and keep it DRY
+
+#### **Pair Programming** 
+Pair Programming is a software development technique where **two programmers work together on the same code** at the same time.  
+
+- `Driver`: Actively writes the code.  
+- `Navigator`: Reviews each line, gives feedback, and guides the approach.  
+- They `switch roles frequently` to ensure collaboration and shared understanding.  
+
+This method helps improve **code quality, knowledge sharing, and problem-solving efficiency**.
