@@ -62,6 +62,7 @@ const sayHello = function() {
 - `Execution Context` = `Thread of Execution` + `Memory`
 - Every function is like a mini app so calling a function creates a new `Execution Context`
 - Once the function finishes running, its Execution Context is removed from memory.
+- Each time a function is called, JavaScript creates a separate memory space for that function. This space is called `local memory`
 
 <div align="center">
     <img src="https://i.imgur.com/sYjybWe.png" width="350"/> &nbsp;
@@ -193,3 +194,133 @@ Pair Programming is a software development technique where **two programmers wor
 - They `switch roles frequently` to ensure collaboration and shared understanding.  
 
 This method helps improve **code quality, knowledge sharing, and problem-solving efficiency**.
+
+---
+## 🌟 Section 4: Closure
+- Local Memory = Variable Environment (VE) = State
+- When the function finishes executing, its local memory is deleted (except the returned value)
+
+#### 🧠 What if a function could remember the past, even after it finished running? What if it could hold on to data instead of starting from scratch every time?
+- It all starts with us returning a function from another function.
+- A closure allows a function to remember and access variables from its outer (lexical) scope, even after that outer function has finished execution.
+
+```js
+function outer() {
+        let unusedVar = 0; // Memory Leak. This value and label in memory but you can't access them.
+        let count = 0; // This stays in memory
+
+        function incrementCounter() {
+                count++;
+                console.log(`Count: ${count}`);
+        }
+
+    return incrementCounter; // Returning the function with its backpack
+}
+
+const myNewFunction = outer(); // outer runs, returns incrementCounter (with its memory!)
+
+myNewFunction(); // Count: 1
+myNewFunction(); // Count: 2
+myNewFunction(); // Count: 3
+
+```
+
+<div align="center">
+  <img src="https://i.imgur.com/IA7hYlq.png" width="450"/>
+</div>
+
+- When a function is returned from another function, it carries its surrounding memory (scope) with it.
+- This means the returned function remembers variables from its parent function, even after the parent function has finished execution.
+- The function’s local memory is preserved and remains accessible whenever the function is called later.
+- When executed, the function first looks into its own local memory for variables.
+- If the variable isn’t found, it looks into its closure scope (or "backpack"), which contains references to the parent function’s memory.
+- You can't directly access this "permanent memory" (closure scope) from the outside.
+ 
+**When an inner function is returned from its parent function, it keeps a reference to the outer function’s variables via a hidden property called [[scope]]. This allows the inner function to access and modify the outer function’s variables even after the outer function has been removed from the call stack.**
+
+- Closed over ‘Variable Environment’ (C.O.V.E.) = Persistent Lexical Scope Referenced Data (P.L.S.R.D.) = `Closure` (most commonly used)
+
+**you might find this helpful:** https://medium.com/dailyjs/i-never-understood-javascript-closures-9663703368e8
+
+```js
+// Individual backpacks
+function outer() {
+    let count = 0; // Each call to outer() creates a new count variable
+
+    function incrementCounter() {
+        count++;
+        console.log(`Count: ${count}`);
+    }
+
+    return incrementCounter;
+}
+
+const counter1 = outer(); // New closure with its own count variable
+const counter2 = outer(); // Another closure with a separate count variable
+
+counter1(); // Count: 1 (counter1)
+counter1(); // Count: 2 (counter1)
+
+counter2(); // Count: 1 (counter2, separate closure, they have different backpack)
+counter2(); // Count: 2 (counter2)
+```
+```js
+function outer() {
+    let count = 0; // Stored inside the closure
+
+    return {
+        increment: function () {
+            count++;
+            console.log(`Incremented: ${count}`);
+        },
+        decrement: function () {
+            count--;
+            console.log(`Decremented: ${count}`);
+        },
+        reset: function () {
+            count = 0;
+            console.log(`Reset: ${count}`);
+        }
+    };
+}
+
+const counter = outer(); // Creates a closure
+
+counter.increment(); // Incremented: 1
+counter.increment(); // Incremented: 2
+counter.decrement(); // Decremented: 1
+counter.reset();     // Reset: 0
+counter.increment(); // Incremented: 1
+```
+```js
+let count = 0; // Global scope
+
+function outer() {
+    function incrementCounter() {
+        count++;
+        console.log(`Count: ${count}`);
+    }
+
+    return incrementCounter;
+}
+
+const myNewFunction = outer();
+myNewFunction(); // Count: 1
+myNewFunction(); // Count: 2
+
+const anotherFunction = outer();
+anotherFunction(); // Count: 3 (Since count is global, it affects all instances)
+anotherFunction(); // Count: 4
+```
+#### **Why Use Closures?**  
+Closures provide functions with persistent memory, unlocking powerful patterns for writing clean, maintainable, and professional JavaScript code. 
+
+- **Persistent State** – Functions can "remember" data even after execution.  
+- **Encapsulation** – Helps protect variables from being accessed or modified outside their intended scope.  
+- **Memory Efficiency** – Avoids unnecessary global variables.  
+- **Practical Uses:**  
+  - ✅ **Helper Functions** – Utilities like `once` and `memoize` leverage closures.  
+  - ✅ **Iterators & Generators** – Use lexical scoping and closures to manage data flow.  
+  - ✅ **Module Pattern** – Keep state without polluting the global scope.  
+  - ✅ **Asynchronous JS** – Callbacks, Promises, and async/await rely on closures to persist state.  
+
